@@ -1,0 +1,16 @@
+#!/bin/sh
+
+RSTARPKGR_BASEDIR="$(CDPATH="" cd -- "$(dirname -- "$0")/.." && pwd -P)"
+export RSTARPKGR_BASEDIR
+
+main() {
+	if ! command -v bash > /dev/null
+	then
+		printf "You need bash to run rstarpkgr\n" >&2
+		exit 1
+	fi
+
+	exec bash "$RSTARPKGR_BASEDIR/lib/main.bash" "$@"
+}
+
+main "$@"

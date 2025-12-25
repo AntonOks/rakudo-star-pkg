@@ -1,0 +1,32 @@
+name: "rakudo-star"
+version: $RSTARPKGR_VERSION
+release: $RSTARPKGR_REVISION
+arch: $RSTARPKGR_ARCH
+platform: $RSTARPKGR_OS
+maintainer: "AntonOks <notna@ist-einmalig.de>"
+description: |
+  Rakudo-Star bundled application.
+  Pre-packaged directory deployed to /opt/rakudo-star.
+vendor: "Rakudo Community"
+homepage: "https://rakudo.org/star"
+license: "Artistic-2.0 license"
+version_schema: "none"
+section: "perl"
+priority: "optional"
+contents:
+  - src: rstar_bin/
+    dst: /opt/rakudo-star
+    type: tree
+  - src: rstar_src/
+    dst: /opt/rakudo-star/src
+    type: tree
+  - src: /opt/rakudo-star/bin/raku
+    dst: /usr/bin/raku
+    type: symlink
+  - src: /opt/rakudo-star/bin/nqp
+    dst: /usr/bin/nqp
+    type: symlink
+  - src: /opt/rakudo-star/bin/perl6
+    dst: /usr/bin/perl6
+    type: symlink
+
