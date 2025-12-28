@@ -1,15 +1,15 @@
 name: "rakudo-star"
-version: "2025.11"
-release: "01"
+version: ${RSTARPKGR_VERSION}
+release: ${RSTARPKGR_REVISION}
+arch: ${RSTARPKGR_ARCH}
+platform: ${RSTARPKGR_OS}
 maintainer: "AntonOks <notna@ist-einmalig.de>"
 description: |
-  Rakudo Star bundled application.
+  Rakudo-Star bundled application.
   Pre-packaged directory deployed to /opt/rakudo-star.
 vendor: "Rakudo Community"
 homepage: "https://rakudo.org/star"
 license: "Artistic-2.0 license"
-arch: "amd64"
-platform: "linux"
 version_schema: "none"
 section: "perl"
 priority: "optional"

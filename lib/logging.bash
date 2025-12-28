@@ -19,10 +19,10 @@ log() {
 	printf "${color}[%s] %s\e[0m\n" "$(date +%FT%T)" "$*" >&2
 }
 
-if [[ "$(awk '$1 == "'"$TERM"'" {print 1}' "$BASEDIR/etc/color-terminals.txt")" ]]
+if [[ "$(awk '$1 == "'"$TERM"'" {print 1}' "$RSTARPKGR_BASEDIR/etc/color-terminals.txt")" ]]
 then
 	debug() {
-		[[ -z $RSTARPKGR_DEBUG ]] && return
+		! [[ "$RSTARPKGR_DEBUG" ]] && return
 		log -c "\e[1;30m" -- "$*"
 	}
 
@@ -51,7 +51,7 @@ then
 	}
 else
 	debug() {
-		[[ -z $RSTARPKGR_DEBUG ]] && return
+		! [[ "$RSTARPKGR_DEBUG" ]] && return
 		log -- "[DEBUG] $*"
 	}
 
