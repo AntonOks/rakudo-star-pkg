@@ -1,8 +1,8 @@
 name: "rakudo-star"
-version: 2025.12
-release: 01
-arch: amd64
-platform: linux
+version: ${RSTARPKGR_VERSION}
+release: ${RSTARPKGR_REVISION}
+arch: ${RSTARPKGR_ARCH}
+platform: ${RSTARPKGR_OS}
 maintainer: "AntonOks <notna@ist-einmalig.de>"
 description: |
   Rakudo-Star bundled application.
@@ -14,10 +14,10 @@ version_schema: "none"
 section: "perl"
 priority: "optional"
 contents:
-  - src: rakudo-star-2025.12-01_src/
+  - src: rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_src/
     dst: /opt/rakudo-star/src
     type: tree
-  - src: rakudo-star-2025.12-01_bin/
+  - src: rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_bin/
     dst: /opt/rakudo-star
     type: tree
   - src: /opt/rakudo-star/bin/raku
