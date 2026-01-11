@@ -57,7 +57,7 @@ main() {
 			A) RSTARPKGR_ARCH=$OPTARG ;;
 			T) RSTARPKGR_TOOLCHAIN=$OPTARG ;;
 			D) RSTARPKGR_TMPDIR=$OPTARG ;;
-			c) RSTARPKGR_CLEANUP=$OPTARG ;;
+			c) RSTARPKGR_CLEANUP=1 ;;
 			d) RSTARPKGR_DEBUG=1 ;;
 			h) usage ; exit 0 ;;
 			*) emerg "Invalid option specified: $opt" ; RSTARPKGR_GETOPT_ERROR=1 ;;
@@ -67,7 +67,7 @@ main() {
 
   if [ ${RSTARPKGR_GETOPT_ERROR} ]; then usage ; exit 3; fi
 
-  export RSTAR_DEBUG=${RSTARPKGR_DEBUG}
+  # export RSTAR_DEBUG=${RSTARPKGR_DEBUG}
 
   # Maintain our own tempdir
   if ! [[ -d ${RSTARPKGR_TMPDIR} ]]; then mkdir -p -- "${RSTARPKGR_TMPDIR}"; fi
@@ -94,6 +94,7 @@ main() {
   # get the downloaded Rakudo-Star sources into the right directory structure
   cd ${RSTARPKGR_TMPDIR}
   mkdir -p -- ${RSTARPKGR_TMPDIR}/rstar_src && tar -xzf rakudo-star.tar.gz --directory ${RSTARPKGR_TMPDIR}/rstar_src && rm -f -- rakudo-star.tar.gz
+
   if [[ ${RSTARPKGR_VERSION} == "latest" ]]; then
 	  RSTARPKGR_VERSION="$(ls -d ${RSTARPKGR_TMPDIR}/rstar_src/rakudo-star-* | grep -Po "(\d+\.\d+)(\\.[0-9]+)?")"
     debug "Changed \$RSTARPKGR_VERSION from \"latest\" to \"${RSTARPKGR_VERSION}\""
@@ -111,11 +112,11 @@ main() {
   # we use the Rakudo-Star `rstar` bash tool to compile and install Rakudo-Star
   # we expect the file `etc/fetch_core.txt` of the dowloaded $RSTARPKGR_VERSION
   #  is correct as it will be used by the `rstar` tool internally
-  debug "Building Rakudo-Star with \"./rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_src/bin/rstar install -p ${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_bin\""
+  debug "Building Rakudo-Star with \"${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_src/bin/rstar install -p ${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_bin\""
   if [[ "${RSTARPKGR_DEBUG}" ]]; then
-    ./rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_src/bin/rstar install -p ${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_bin
+    ${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_src/bin/rstar install -p ${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_bin
   else
-    ./rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_src/bin/rstar install -p ${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_bin > /dev/null 2>&1
+    ${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_src/bin/rstar install -p ${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_bin > /dev/null 2>&1
   fi
 
   if [[ $? == "0" ]]; then
@@ -141,7 +142,7 @@ main() {
     if [[ "${RSTARPKGR_DEBUG}" ]]; then
       nfpm pkg --config ${RSTARPKGR_BASEDIR}/etc/nfpm.yaml --packager $PKG --target ${RSTARPKGR_BASEDIR}/pkgs/
     else
-      nfpm pkg --config ${RSTARPKGR_BASEDIR}/etc/nfpm.yaml --packager $PKG --target ${RSTARPKGR_BASEDIR}/pkgs/ > /dev/null
+      $(nfpm pkg --config ${RSTARPKGR_BASEDIR}/etc/nfpm.yaml --packager $PKG --target ${RSTARPKGR_BASEDIR}/pkgs/) > /dev/null 2>&1
     fi
   done
   cd ${RSTARPKGR_BASEDIR}
@@ -168,7 +169,7 @@ Options:
   -h                    Print the usage help.
   -V "YYYY.MM[.#]"      Rakudo-Star version to build binary packages for.
                         Usually Rakudo-Star versions look like "2025.12",
-                        sometimes there are patched verions like "2022.06.1".
+                        sometimes there are patched versions like "2022.06.1".
   -R "##"               The revisions is almost always 01.
   -O "operating system" We only build on and for Linux.
   -A "architecture"     Mainly x86_64, which is also known as amd64.
