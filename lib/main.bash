@@ -155,7 +155,7 @@ usage() {
 
 Usage:
 
-  rstarpkgr [-h] [-V <version>] [-R <revision>] [-O <os>] [-A <architecture>] [-T <compiler toolchain>] [-D <temp dir>] [-c <all | version>] [-d]
+  rstarpkgr [-h] [-V <version>] [-R <revision>] [-O <os>] [-A <architecture>] [-T <compiler toolchain>] [-D <temp dir>] [-c <all | version>] [-d] [<version>]
 
 Options:
   -h                           Print the usage help.
@@ -171,6 +171,11 @@ Options:
                                Specify 'all' to delete all Rakudo-Star source and binary
                                directories or provide a specific release version.
   -d                           Debug mode. Plenty of additional information.
+
+Optional:
+  ["YYYY.MM[.#]"]              If an additional CLI option is given after all the parameters,
+                               it's expected to be the really desired Rakudo-Start version.
+                               ATTENTION: This will overwrite any previous -V option parameter!
 
 Environment variables:
   RSTARPKGR_BACKEND     Rakudo backend, only "moar" is supported by Rakudo.
