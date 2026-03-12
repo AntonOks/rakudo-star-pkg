@@ -1,0 +1,64 @@
+name: Build and Release Rakudo Star Package
+
+on:
+  push:
+    tags:
+      - '*' # triger with each new git tag (z.B. 2025.12)
+  
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build from'
+        required: true
+        type: string
+        default: main
+      tag:
+        description: 'Rakudo-Star version (e.g., 2025.12)'
+        required: true
+        type: string
+      prerelease:
+        description: 'Mark as pre-release'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write # required to create a release and upload artifacts
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Build Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential perl tput nfpm envsubst
+
+      - name: Extract Version from Tag
+        id: vars
+        shell: bash
+        run: |
+          # extract git tag (i.e. v2025.12 -> 2025.12)
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "TAG_NAME=$GITHUB_REF_NAME" >> $GITHUB_OUTPUT
+
+      - name: Run rstarpkgr
+        run: |
+          chmod +x bin/rstarpkgr
+          ./bin/rstarpkgr -V "${{ steps.vars.outputs.VERSION }}"
+
+      - name: Create GitHub Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.vars.outputs.TAG_NAME }} || ${{ github.event.inputs.tag }}
+          name: Rakudo-Star ${{ steps.vars.outputs.VERSION }} packages
+          files: pkgs/*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
