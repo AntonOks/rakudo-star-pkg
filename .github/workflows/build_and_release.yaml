@@ -18,7 +18,7 @@ on:
         default: '01'
 
 env:
-  TERM: xterm    # to make `tput` happy :|
+  TERM: vt100    # to make `tput` happy :|
 
 permissions:
   contents: write # required to create a release and upload artifacts
