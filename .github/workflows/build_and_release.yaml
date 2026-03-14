@@ -28,7 +28,7 @@ on:
         default: false
 
 env:
-  TERM: dump    # to make `tput` happy :|
+  TERM: xterm    # to make `tput` happy :|
 
 permissions:
   contents: write # required to create a release and upload artifacts
