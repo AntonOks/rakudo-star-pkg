@@ -7,11 +7,6 @@ on:
   
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'Branch to build from'
-        required: true
-        type: string
-        default: main
       version:
         description: 'Rakudo-Star version (e.g., 2025.12)'
         required: true
@@ -21,11 +16,6 @@ on:
         required: true
         type: string
         default: '01'
-      prerelease:
-        description: 'Mark as pre-release'
-        required: false
-        type: boolean
-        default: false
 
 env:
   TERM: xterm    # to make `tput` happy :|
@@ -60,7 +50,7 @@ jobs:
       - name: Run rstarpkgr
         run: |
           chmod +x bin/rstarpkgr
-          ./bin/rstarpkgr -V "${{ github.event.inputs.version }}"
+          ./bin/rstarpkgr -d -V "${{ github.event.inputs.version }}"
 
       - name: Create GitHub Release and Upload Assets
         uses: softprops/action-gh-release@v2
