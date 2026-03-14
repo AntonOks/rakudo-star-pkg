@@ -20,7 +20,7 @@ on:
         description: 'Revision of the version (usualy 01)'
         required: true
         type: string
-        default: 01
+        default: '01'
       prerelease:
         description: 'Mark as pre-release'
         required: false
