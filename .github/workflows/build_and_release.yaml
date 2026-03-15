@@ -18,7 +18,7 @@ on:
         default: '01'
 
 env:
-  TERM: vt100    # to make `tput` happy :|
+  TERM: vt100                                 # to make `tput` happy :|
 
 permissions:
   contents: write # required to create a release and upload artifacts
@@ -62,3 +62,4 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true        # keep the old action until new one's are validated (by us)
