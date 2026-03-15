@@ -50,7 +50,7 @@ jobs:
       - name: Run rstarpkgr
         run: |
           chmod +x bin/rstarpkgr
-          ./bin/rstarpkgr -d -V "${{ github.event.inputs.version }}"
+          ./bin/rstarpkgr -V "${{ github.event.inputs.version }}"
 
       - name: Create GitHub Release and Upload Assets
         uses: softprops/action-gh-release@v2
