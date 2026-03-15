@@ -107,8 +107,8 @@ main() {
   debug "Building Rakudo-Star with \"${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_src/bin/rstar install -p ${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_bin\""
 
   ### For debugging, where a long running build isn't the issue, uncomment the 2x below lines to exit here...
-   read -p 'Press "y" to continue or any other key to exit...' YN
-   [[ "$YN" == y* ]] || exit
+  # read -p 'Press "y" to continue or any other key to exit...' YN
+  # [[ "$YN" == y* ]] || exit
   
   [[ -x "${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_src/bin/rstar" ]] || die "Couldn't find the \"rstar\" tool, please investigate"
   if [[ "${RSTARPKGR_DEBUG}" ]]; then
