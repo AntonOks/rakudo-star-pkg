@@ -1,3 +1,7 @@
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/AntonOks/rakudo-star-pkg)
+
+> Find more details and insights about this repo and its `rstarpkgr` tool on the [related DeepWiki](https://deepwiki.com/AntonOks/rakudo-star-pkg) site!
+---
 # rakudo-star-pkg
 
 ## Rakudo-Star Packager
