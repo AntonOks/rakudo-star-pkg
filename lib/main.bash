@@ -118,8 +118,8 @@ main() {
   fi
 
   if [[ $? == "0" ]]; then
-    debug "Creating the \"rakudo-star-linux-relocable-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_${RSTARPKGR_ARCH}.tar.gz\""
-    tar -czf ${RSTARPKGR_BASEDIR}/pkgs/rakudo-star-linux-relocable-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_${RSTARPKGR_ARCH}.tar.gz -C ${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_bin/ .
+    debug "Creating the \"rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_${RSTARPKGR_ARCH}-linux-relocatable.tar.gz\""
+    tar -czf ${RSTARPKGR_BASEDIR}/pkgs/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_${RSTARPKGR_ARCH}-linux-relocatable.tar.gz -C ${RSTARPKGR_TMPDIR}/rakudo-star-${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}_bin/ .
   else
     crit "\"rstar\" tool couldn't install Rakudo, please investigate why..."
     return 15
@@ -135,8 +135,8 @@ main() {
   envsubst < ${RSTARPKGR_BASEDIR}/etc/nfpm.yaml_temp > ${RSTARPKGR_BASEDIR}/etc/nfpm.yaml 
   
   # now let's build the packages
-  debug "Building \"apk archlinux deb rpm\" packages with \"nfpm\"."
-  for PKG in apk archlinux deb rpm; do
+  debug "Building \"apk archlinux deb ipk rpm\" packages with \"nfpm\"."
+  for PKG in apk archlinux deb ipk rpm; do
     if [[ "${RSTARPKGR_DEBUG}" ]]; then
       nfpm pkg --config ${RSTARPKGR_BASEDIR}/etc/nfpm.yaml --packager $PKG --target ${RSTARPKGR_BASEDIR}/pkgs/
     else
@@ -145,6 +145,16 @@ main() {
   done
 
   chgdir "${RSTARPKGR_BASEDIR}"
+
+  # TODO
+  source /etc/os-release
+  for PKG in ${RSTARPKGR_BASEDIR}/pkgs/rakudo-star*${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}* ; do
+    if [[ "$PKG" == *tar* ]]; then
+      mv "$PKG" "${PKG%.tar.*}-${VERSION_CODENAME}.tar.${PKG#*tar.*}"
+    else
+      mv "$PKG" "${PKG%.*}-${VERSION_CODENAME}.${PKG##*.}"
+    fi
+  done
 
 }
 
