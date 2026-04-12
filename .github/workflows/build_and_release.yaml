@@ -25,7 +25,9 @@ permissions:
 
 jobs:
   build-and-release:
-    runs-on: ubuntu-latest
+    # We build on the oldest possible GitHub runner because MoarVM and Rakudo have a glibc dependency.
+    # By compiling Rakudo-Star on the oldest available runner, we provide at lease some backwards compatibility with those binary packages.
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Repository
