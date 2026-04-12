@@ -3,7 +3,7 @@ name: Build and Release Rakudo Star Package
 on:
   push:
     tags:
-      - 2[0-9]+.[0-1][0-1]'**' # triger with each new git tag (z.B. 2025.12)
+      - 2[0-9]+.[0-1][0-1]'**' # trigger with each new git tag (z.B. 2025.12)
   
   workflow_dispatch:
     inputs:
