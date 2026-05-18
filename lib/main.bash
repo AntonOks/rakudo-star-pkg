@@ -147,14 +147,14 @@ main() {
   chgdir "${RSTARPKGR_BASEDIR}"
 
   # TODO
-  source /etc/os-release
-  for PKG in ${RSTARPKGR_BASEDIR}/pkgs/rakudo-star*${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}* ; do
-    if [[ "$PKG" == *tar* ]]; then
-      mv "$PKG" "${PKG%.tar.*}-${VERSION_CODENAME}.tar.${PKG#*tar.*}"
-    else
-      mv "$PKG" "${PKG%.*}-${VERSION_CODENAME}.${PKG##*.}"
-    fi
-  done
+  # source /etc/os-release
+  # for PKG in ${RSTARPKGR_BASEDIR}/pkgs/rakudo-star*${RSTARPKGR_VERSION}-${RSTARPKGR_REVISION}* ; do
+  #   if [[ "$PKG" == *tar* ]]; then
+  #     mv "$PKG" "${PKG%.tar.*}-${VERSION_CODENAME}.tar.${PKG#*tar.*}"
+  #   else
+  #     mv "$PKG" "${PKG%.*}-${VERSION_CODENAME}.${PKG##*.}"
+  #   fi
+  # done
 
 }
 
